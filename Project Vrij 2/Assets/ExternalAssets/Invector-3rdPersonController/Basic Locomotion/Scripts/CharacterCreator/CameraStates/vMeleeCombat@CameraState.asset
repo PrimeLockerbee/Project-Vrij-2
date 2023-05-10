@@ -67,7 +67,7 @@ MonoBehaviour:
   - Name: Strafing
     forward: -1
     right: 0.5
-    defaultDistance: 3
+    defaultDistance: 2
     maxDistance: 1.5
     minDistance: 0.25
     height: 1.3

@@ -1,6 +1,7 @@
 ﻿using Invector.vEventSystems;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Invector.vCharacterController.AI
 {

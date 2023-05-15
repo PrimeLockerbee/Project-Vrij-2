@@ -257,7 +257,7 @@ namespace Invector.vCamera
                 lerpState = state; // set the state of transition (lerpstate) to the state finded on the list
                 if (!firstStateIsInit)
                 {
-                    currentState.defaultDistance = Vector3.Distance(targetLookAt.position, transform.position);
+                    //currentState.defaultDistance = Vector3.Distance(targetLookAt.position, transform.position);
                     currentState.forward = lerpState.forward;
                     currentState.height = state.height;
                     currentState.fov = state.fov;

@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Bradley's Test Scenes/TempMainMenu.unity
+    guid: 638fc3d16a1d1ff4d8e43d71d946ea77
+  - enabled: 1
+    path: Assets/Scenes/Bradley's Test Scenes/BlockoutPlayerTest.unity
+    guid: 438fcd1e940100f4a92a9a3cb32b80bc
   m_configObjects: {}

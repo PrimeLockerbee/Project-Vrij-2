@@ -21,6 +21,9 @@ namespace Invector.vCharacterController.AI
         private bool isCooldown = false;    //flag to indicate if the stun ability is on cooldown
         public float cooldownTime = 15.0f;  //the remaining time on the stun ability cooldown
 
+        public GameObject stunVFXPrefab;
+        GameObject stunVFX;
+
         void Start()
         {
             //get the NavMeshAgent component
@@ -99,25 +102,30 @@ namespace Invector.vCharacterController.AI
                             enemyNavMeshAgent.wanderSpeed = 0.0f;
                             enemyNavMeshAgent.chaseSpeed = 0.0f;
                             enemyNavMeshAgent.strafeSpeed = 0.0f;
-                            StartCoroutine(EnableNavMeshAgent(enemyNavMeshAgent, stunDuration));
+
+                            stunVFX = Instantiate(stunVFXPrefab, nearestCollider.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                            StartCoroutine(EnableNavMeshAgent(enemyNavMeshAgent, stunDuration, stunVFX));
                         }
 
                         //start the cooldown timer
                         isCooldown = true;
+                        stunVFX.transform.position = enemyNavMeshAgent.transform.position + new Vector3(0, 1, 0);
                     }
                 }
             }
+
+
         }
 
-        IEnumerator EnableNavMeshAgent(v_AIController agent, float delay)
+        private IEnumerator EnableNavMeshAgent(v_AIController agent, float delay, GameObject stunVFX)
         {
-            Debug.Log("Stun works");
+            stunVFX.SetActive(true);
             yield return new WaitForSeconds(delay);
             agent.patrolSpeed = 0.5f;
             agent.wanderSpeed = 0.5f;
             agent.chaseSpeed = 1.0f;
             agent.strafeSpeed = 1.0f;
-
+            Destroy(stunVFX);
         }
     }
 }

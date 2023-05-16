@@ -96,14 +96,14 @@ namespace Invector
         {
             get
             {
-                return !(currentHealth <= 0 || (healthRecovery == 0 && currentHealth < maxHealth));
+                return (currentHealth >= 0 && healthRecovery > 0 && currentHealth < maxHealth);
             }
         }
 
         protected virtual IEnumerator RecoverHealth()
         {
             inHealthRecovery = true;
-            while (canRecoverHealth)
+            while (canRecoverHealth && !isDead)
             {
                 HealthRecovery();
                 yield return null;
@@ -113,7 +113,7 @@ namespace Invector
 
         protected virtual void HealthRecovery()
         {
-            if (!canRecoverHealth) return;
+            if (!canRecoverHealth||isDead) return;
             if (currentHealthRecoveryDelay > 0)
                 currentHealthRecoveryDelay -= Time.deltaTime;
             else
@@ -126,9 +126,9 @@ namespace Invector
         }
 
         /// <summary>
-        /// Add the currentHealth of Character
+        /// Increase or decrease  currentHealth (Positive or Negative Values)
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">Value to change</param>
         public virtual void AddHealth(int value)
         {
             currentHealth += value;
@@ -157,6 +157,16 @@ namespace Invector
             HandleCheckHealthEvents();
         }
 
+        /// <summary>
+        /// Reset's current health to specific health value
+        /// </summary>
+        /// <param name="health">target health</param>
+        public virtual void ResetHealth(float health)
+        {
+            currentHealth = health;
+            onResetHealth.Invoke();
+            if (isDead) isDead = false;
+        }
         /// <summary>
         /// Reset's current health to max health
         /// </summary>
@@ -193,8 +203,8 @@ namespace Invector
                     currentHealth -= damage.damageValue;
                 }
 
-                //if (damage.damageValue > 0)
-                onReceiveDamage.Invoke(damage);
+                if (damage.damageValue > 0)
+                    onReceiveDamage.Invoke(damage);
                 HandleCheckHealthEvents();
             }
         }
@@ -209,7 +219,7 @@ namespace Invector
             {
                 events[i].OnCheckHealth.Invoke();
             }
-            if (currentHealth < maxHealth && this.gameObject.activeInHierarchy)
+            if (currentHealth < maxHealth && this.gameObject.activeInHierarchy && !inHealthRecovery)
                 StartCoroutine(RecoverHealth());
         }
 
@@ -238,4 +248,3 @@ namespace Invector
         }
     }
 }
-

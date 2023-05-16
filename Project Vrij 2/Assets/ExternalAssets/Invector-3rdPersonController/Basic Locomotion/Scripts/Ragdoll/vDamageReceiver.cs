@@ -47,6 +47,7 @@ namespace Invector.vCharacterController
 
         public virtual void TakeDamage(vDamage damage)
         {
+          
             if (healthController == null && targetReceiver)
                 healthController = targetReceiver.GetComponent<vIHealthController>();
             else if (healthController == null)
@@ -56,7 +57,7 @@ namespace Invector.vCharacterController
             {
                 var _damage = ApplyDamageModifiers(damage);
                 healthController.TakeDamage(_damage);
-                onReceiveDamage.Invoke(_damage);
+                onReceiveDamage.Invoke(_damage);               
             }
         }
 

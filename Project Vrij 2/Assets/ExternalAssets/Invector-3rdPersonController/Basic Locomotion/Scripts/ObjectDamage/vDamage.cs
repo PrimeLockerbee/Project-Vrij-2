@@ -28,6 +28,7 @@ namespace Invector
         [HideInInspector]
         public int reaction_id = 0;
         public string damageType;
+        [HideInInspector] public Vector3 force;
 
         public vDamage()
         {
@@ -68,6 +69,7 @@ namespace Invector
             this.damageType = damage.damageType;
             this.hitPosition = damage.hitPosition;
             this.senselessTime = damage.senselessTime;
+            this.force = damage.force;
         }
 
         /// <summary>

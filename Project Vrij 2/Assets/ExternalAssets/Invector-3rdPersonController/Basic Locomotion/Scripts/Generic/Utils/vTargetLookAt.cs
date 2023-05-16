@@ -6,14 +6,18 @@ namespace Invector.Utils
     public class vTargetLookAt : MonoBehaviour
     {
         public Transform target;
-        public float smoot;
+        public float smooth;
+        public float offsetHeight;
+        public bool limitDistance;
+        public float minDistanceToLook;
         // Update is called once per frame
         void Update()
         {
-            var dir = target.position - transform.position;
+            if (!target) return;
+            var dir = target.position+Vector3.up*offsetHeight - transform.position;
             Quaternion rotation = Quaternion.LookRotation(dir.normalized, Vector3.up);
-
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, smoot * Time.deltaTime);
+            if(!limitDistance|| dir.magnitude>minDistanceToLook )
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, smooth * Time.deltaTime);
         }
     }
 }

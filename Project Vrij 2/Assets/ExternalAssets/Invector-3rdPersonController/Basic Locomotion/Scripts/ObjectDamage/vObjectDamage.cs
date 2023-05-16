@@ -1,19 +1,20 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Invector
-{   [vClassHeader("OBJECT DAMAGE", iconName = "DamageIcon")]
+{
+    [vClassHeader("OBJECT DAMAGE", iconName = "DamageIcon")]
     public class vObjectDamage : vMonoBehaviour
     {
         [System.Serializable]
         public class OnHitEvent : UnityEngine.Events.UnityEvent<Collider> { }
-        public vDamage damage;       
+        public vDamage damage;
         [Tooltip("Assign this to set other damage sender")]
         public Transform overrideDamageSender;
         [Tooltip("List of tags that can be hit")]
-        public List<string> tags;        
+        public List<string> tags;
         [Tooltip("Check to use the damage Frequence")]
-        public bool continuousDamage;      
+        public bool continuousDamage;
         [Tooltip("Apply damage to each end of the frequency in seconds ")]
         public float damageFrequency = 0.5f;
         private List<Collider> targets;
@@ -23,29 +24,32 @@ namespace Invector
 
         public enum CollisionMethod
         {
-            OnTriggerEnter, 
-            OnColliderEnter, 
+            OnTriggerEnter,
+            OnColliderEnter,
             OnParticleCollision
         }
 
         public CollisionMethod collisionMethod = CollisionMethod.OnTriggerEnter;
 
         public ParticleSystem part;
+        public bool limitParticleCollisionEvent = false;
+        public int maxParticleCollisionEvent = 1;
         public List<ParticleCollisionEvent> collisionEvents;
 
         protected virtual void Start()
         {
             targets = new List<Collider>();
             disabledTarget = new List<Collider>();
-            if(collisionMethod == CollisionMethod.OnParticleCollision)
+            if (collisionMethod == CollisionMethod.OnParticleCollision)
             {
                 part = GetComponent<ParticleSystem>();
                 collisionEvents = new List<ParticleCollisionEvent>();
-            }            
+            }
         }
 
         protected virtual void Update()
         {
+            if (!this.enabled) return;
             if (continuousDamage && targets != null && targets.Count > 0)
             {
                 if (currentTime > 0)
@@ -60,9 +64,10 @@ namespace Invector
                         {
                             if (collider.enabled)
                             {
-                                onHit.Invoke(collider);
-                                ApplyDamage(collider.transform, transform.position); // apply damage to enabled collider
-                            }                              
+
+                                ApplyDamage(collider, transform.position); // apply damage to enabled collider
+
+                            }
                             else
                                 disabledTarget.Add(collider);// add disabled collider to list of disabled
                         }
@@ -91,33 +96,37 @@ namespace Invector
 
         protected virtual void OnCollisionEnter(Collision hit)
         {
+            if (!this.enabled) return;
             if (collisionMethod != CollisionMethod.OnColliderEnter || continuousDamage) return;
 
-            if (tags.Contains(hit.gameObject.tag))
+            if ((tags.Count == 0 || tags.Contains(hit.transform.tag)))
             {
-                ApplyDamage(hit.transform, hit.contacts[0].point);
-            }               
+                ApplyDamage(hit.collider, hit.contacts[0].point);
+
+            }
         }
 
         protected virtual void OnTriggerEnter(Collider hit)
         {
+            if (!this.enabled) return;
             if (collisionMethod != CollisionMethod.OnTriggerEnter) return;
-            if (continuousDamage && tags.Contains(hit.transform.tag) && !targets.Contains(hit))
+            if (continuousDamage && (tags.Count == 0 || tags.Contains(hit.transform.tag)) && !targets.Contains(hit))
             {
                 targets.Add(hit);
             }
-            else if (tags.Contains(hit.gameObject.tag))
+            else if (tags.Count == 0 || tags.Contains(hit.gameObject.tag))
             {
-                onHit.Invoke(hit);
-                ApplyDamage(hit.transform, transform.position);
-            }                
+                ApplyDamage(hit, transform.position);
+
+            }
         }
 
         protected virtual void OnTriggerExit(Collider hit)
         {
+            if (!this.enabled) return;
             if (collisionMethod == CollisionMethod.OnColliderEnter && !continuousDamage) return;
 
-            if (tags.Contains(hit.gameObject.tag) && targets.Contains(hit))
+            if ((tags.Count == 0 || tags.Contains(hit.transform.tag)) && targets.Contains(hit))
             {
                 targets.Remove(hit);
             }
@@ -125,44 +134,44 @@ namespace Invector
 
         protected virtual void OnParticleCollision(GameObject hit)
         {
+            if (!this.enabled) return;
             if (collisionMethod != CollisionMethod.OnParticleCollision) return;
 
-            int numCollisionEvents =  part.GetCollisionEvents(hit, collisionEvents);
+            int numCollisionEvents = part.GetCollisionEvents(hit, collisionEvents);
 
             Collider collider = hit.GetComponent<Collider>();
             int i = 0;
 
-            while (i < numCollisionEvents)
+            while ((!limitParticleCollisionEvent && i < numCollisionEvents) || (!limitParticleCollisionEvent && i < maxParticleCollisionEvent))
             {
                 if (collider)
-                {                    
-                    if (continuousDamage && tags.Contains(hit.transform.tag) && !targets.Contains(collider))
+                {
+                    if (continuousDamage && (tags.Count == 0 || tags.Contains(hit.transform.tag)) && !targets.Contains(collider))
                     {
                         targets.Add(collider);
                     }
-                    else if (tags.Contains(hit.gameObject.tag))
+                    else if ((tags.Count == 0 || tags.Contains(hit.transform.tag)))
                     {
-                        onHit.Invoke(collider);
-                        ApplyDamage(hit.transform, transform.position);
+                        ApplyDamage(collider, transform.position);
                     }
-                }               
+                }
                 i++;
-            }           
+            }
         }
 
         public virtual void ClearTargets()
-        {                        
+        {
             targets.Clear();
         }
 
-        protected virtual void ApplyDamage(Transform target, Vector3 hitPoint)
-        {   
+        protected virtual void ApplyDamage(Collider target, Vector3 hitPoint)
+        {
             damage.hitReaction = true;
-            damage.sender = overrideDamageSender? overrideDamageSender: transform;
+            damage.sender = overrideDamageSender ? overrideDamageSender : transform;
             damage.hitPosition = hitPoint;
-            damage.receiver = target;
-            
-            target.gameObject.ApplyDamage( new vDamage(damage));
+            damage.receiver = target.transform;
+            target.gameObject.ApplyDamage(new vDamage(damage));
+            onHit.Invoke(target);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Invector.vShooter
             {
                 SceneView.onSceneGUIDelegate += this.OnSceneGUI;
             }
-#elif UNITY_2019
+#elif UNITY_2019_1_OR_NEWER
             SceneView.duringSceneGui -= this.OnSceneGUI;
             SceneView.duringSceneGui += this.OnSceneGUI;
 #endif

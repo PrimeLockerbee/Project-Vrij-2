@@ -21,16 +21,22 @@ namespace Invector
 
         protected bool inCollision;
         protected bool triggerStay;
-        protected bool hadOneCollider;
-        protected Collider other;        
+        protected Collider other;
         protected BoxCollider _selfCollider;
 
         public virtual BoxCollider selfCollider
         {
             get
             {
-                if (!_selfCollider && transform.GetComponent<BoxCollider>() == null) _selfCollider = gameObject.AddComponent<BoxCollider>();
-                else if (!_selfCollider) _selfCollider = transform.GetComponent<BoxCollider>();
+                if (!_selfCollider && transform.GetComponent<BoxCollider>() == null)
+                {
+                    _selfCollider = gameObject.AddComponent<BoxCollider>();
+                }
+                else if (!_selfCollider)
+                {
+                    _selfCollider = transform.GetComponent<BoxCollider>();
+                }
+
                 return _selfCollider;
             }
             protected set
@@ -70,27 +76,34 @@ namespace Invector
             {
                 inCollision = true;
                 this.other = other;
-                hadOneCollider = true;
                 onTriggerEnter.Invoke(other);
-                StartCoroutine(TriggerStayRoutine());
+                if (this.enabled && gameObject.activeInHierarchy)
+                {
+                    StartCoroutine(TriggerStayRoutine());
+                }
             }
         }
 
         protected virtual void OnTriggerExit(Collider other)
         {
-            if (this.other != null && this.other.gameObject == other.gameObject || hadOneCollider)
+            if (this.other != null && this.other.gameObject == other.gameObject)
             {
                 inCollision = false;
                 onTriggerExit.Invoke(other);
                 this.other = null;
-                hadOneCollider = false;
             }
         }
 
         protected virtual bool IsInTagMask(string tag)
         {
-            if (tagsToDetect.Count == 0) return true;
-            else return tagsToDetect.Contains(tag);
+            if (tagsToDetect.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return tagsToDetect.Contains(tag);
+            }
         }
 
         protected virtual bool IsInLayerMask(int layer)
@@ -107,7 +120,10 @@ namespace Invector
                     OnTriggerExit(other);
                     break;
                 }
-                else onTriggerStay.Invoke(other);
+                else
+                {
+                    onTriggerStay.Invoke(other);
+                }
 
                 yield return null;
             }

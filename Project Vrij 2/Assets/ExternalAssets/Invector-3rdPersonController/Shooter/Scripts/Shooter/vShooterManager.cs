@@ -726,7 +726,7 @@ namespace Invector.vShooter
             float bx = (Mathf.PerlinNoise(0, Time.time * cameraSwaySpeed) - 0.5f);
             float by = (Mathf.PerlinNoise(0, (Time.time * cameraSwaySpeed) + 100)) - 0.5f;
 
-            var swayAmount = cameraMaxSwayAmount * (1f - weapon.precision);
+            var swayAmount = cameraMaxSwayAmount * (1f - weapon.velocity);
             if (swayAmount == 0) return;
 
             bx *= swayAmount;

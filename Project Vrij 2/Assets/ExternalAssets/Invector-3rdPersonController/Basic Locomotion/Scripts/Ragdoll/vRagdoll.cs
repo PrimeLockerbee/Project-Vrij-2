@@ -236,7 +236,10 @@ namespace Invector.vCharacterController
                     StartCoroutine(ResetPlayer(1.1f));
                 }
                 else if (animator != null && !animator.isActiveAndEnabled && ragdolled || (animator == null && ragdolled))
+                {                  
                     transform.position = characterHips.position;
+                }
+                  
             }
         }
 

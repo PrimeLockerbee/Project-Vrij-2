@@ -23,6 +23,7 @@ namespace Invector.vCharacterController.AI
 
         public GameObject stunVFXPrefab;
         GameObject stunVFX;
+        vControlAIMelee enemyNavMeshAgent;
 
         void Start()
         {
@@ -95,13 +96,10 @@ namespace Invector.vCharacterController.AI
 
 
                         //disable the NavMeshAgent of the nearest enemy for the stun duration
-                        v_AIController enemyNavMeshAgent = nearestCollider.GetComponent<v_AIController>();
+                        enemyNavMeshAgent = nearestCollider.GetComponent<vControlAIMelee>();
                         if (enemyNavMeshAgent != null)
                         {
-                            enemyNavMeshAgent.patrolSpeed = 0.0f;
-                            enemyNavMeshAgent.wanderSpeed = 0.0f;
-                            enemyNavMeshAgent.chaseSpeed = 0.0f;
-                            enemyNavMeshAgent.strafeSpeed = 0.0f;
+                            enemyNavMeshAgent.stopMove = true;
 
                             stunVFX = Instantiate(stunVFXPrefab, nearestCollider.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                             StartCoroutine(EnableNavMeshAgent(enemyNavMeshAgent, stunDuration, stunVFX));
@@ -109,22 +107,18 @@ namespace Invector.vCharacterController.AI
 
                         //start the cooldown timer
                         isCooldown = true;
-                        stunVFX.transform.position = enemyNavMeshAgent.transform.position + new Vector3(0, 1, 0);
+                        stunVFX.transform.position = enemyNavMeshAgent.gameObject.transform.position + new Vector3(0, 1, 0);
                     }
                 }
             }
-
-
         }
 
-        private IEnumerator EnableNavMeshAgent(v_AIController agent, float delay, GameObject stunVFX)
+        private IEnumerator EnableNavMeshAgent(vControlAIMelee agent, float delay, GameObject stunVFX)
         {
-            stunVFX.SetActive(true);
             yield return new WaitForSeconds(delay);
-            agent.patrolSpeed = 0.5f;
-            agent.wanderSpeed = 0.5f;
-            agent.chaseSpeed = 1.0f;
-            agent.strafeSpeed = 1.0f;
+
+            agent.stopMove = false;
+
             Destroy(stunVFX);
         }
     }

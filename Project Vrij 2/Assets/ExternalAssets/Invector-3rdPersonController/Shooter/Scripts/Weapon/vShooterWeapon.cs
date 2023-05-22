@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -50,7 +51,6 @@ namespace Invector.vShooter
         public float upperBodyID;
         [Tooltip("What shot animation will trigger")]
         public float shotID;
-        [vHideInInspector("autoReload", true)]
         [Tooltip("What reload animation will play")]
         public int reloadID;
         [Tooltip("What equip animation will play")]
@@ -71,16 +71,18 @@ namespace Invector.vShooter
         [Tooltip("Left IK while attacking")]
         public bool useIkAttacking = false;
         public bool disableIkOnShot = false;
-        public bool useIKOnAiming = true;        
+        public bool useIKOnAiming = true;
         public Transform handIKTarget;
 
         [vEditorToolbar("Projectile")]
         public vShooterWeapon secundaryWeapon;
         [Tooltip("Assign the aimReference of your weapon")]
         public Transform aimReference;
-        [Tooltip("how much precision the weapon have, 1 means no cameraSway and 0 means maxCameraSway from the ShooterManager")]
+        [vHelpBox("Only affects the camera from player, when player is aiming")]
+        [Tooltip("how much the camera will sway when aiming, 1 means no cameraSway and   means maxCameraSway from the ShooterManager")]
         [Range(0, 1)]
-        public float precision = 0.5f;
+        [UnityEngine.Serialization.FormerlySerializedAs("precision")]
+        public float cameraStability = 0.5f;
         [Tooltip("Creates a right recoil on the camera")]
         public float recoilRight = 1;
         [Tooltip("Creates a left recoil on the camera")]
@@ -118,7 +120,7 @@ namespace Invector.vShooter
         public bool isAiming, usingScope;
 
         [vEditorToolbar("Events")]
-        public UnityEvent onReload, onFinishReload, onFinishAmmo, onEnableAim, onDisableAim, onEnableScope, onDisableScope, onFullPower;
+        public UnityEvent onReload, onCancelReload, onFinishReload, onFinishAmmo, onEnableAim, onDisableAim, onEnableScope, onDisableScope, onFullPower;
         [HideInInspector]
         public UnityEvent onDisable;
         public OnChangePowerCharger onChangerPowerCharger;
@@ -136,44 +138,53 @@ namespace Invector.vShooter
 
         [System.NonSerialized] private float testTime;
 
-        void OnDrawGizmos()
+        protected virtual void OnDrawGizmos()
         {
+
             if (!Application.isPlaying && testShootEffect)
             {
                 if (testTime <= 0)
+                {
                     Shootest();
-                else testTime -= Time.deltaTime;
+                }
+                else
+                {
+                    testTime -= Time.deltaTime;
+                }
             }
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             onDisable.Invoke();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
-            if (!reloadSource) reloadSource = source;
+            if (!reloadSource)
+            {
+                reloadSource = source;
+            }
+
             SetScopeZoom(scopeZoom);
         }
 
-        public void Shootest()
+        public virtual void Shootest()
         {
             testTime = shootFrequency;
-
             StartEmitters();
             lightOnShot.enabled = true;
             source.PlayOneShot(fireClip);
             Invoke("StopShootTest", .037f);
         }
 
-        void StopShootTest()
+        protected virtual void StopShootTest()
         {
             StopEmitters();
             lightOnShot.enabled = false;
         }
 
-        public float powerCharge
+        public virtual float powerCharge
         {
             get
             {
@@ -185,38 +196,47 @@ namespace Invector.vShooter
                 {
                     _charge = value;
                     onChangerPowerCharger.Invoke(_charge);
-                    if (_charge >= 1) onFullPower.Invoke();
+                    if (_charge >= 1)
+                    {
+                        onFullPower.Invoke();
+                    }
                 }
             }
         }
 
-        public void SetPrecision(float value)
+        public virtual void SetPrecision(float value)
         {
-            precision = Mathf.Clamp(value, 0, 1);
+            cameraStability = Mathf.Clamp(value, 0, 1);
         }
 
         public override bool HasAmmo()
         {
-
             if (checkAmmoHandle != null)
             {
                 bool isValidAmmo = false;
                 int totalAmmo = 0;
                 var hasAmmo = checkAmmoHandle.Invoke(ref isValidAmmo, ref totalAmmo);
-                if (isValidAmmo) return hasAmmo;
-                else return ammo > 0;
+                if (isValidAmmo)
+                {
+                    return hasAmmo;
+                }
+                else
+                {
+                    return ammo > 0;
+                }
             }
             else
+            {
                 return ammo > 0;
-
+            }
         }
 
-        public bool inHolder
+        public virtual bool inHolder
         {
             get; set;
         }
 
-        public int ammoCount
+        public virtual int ammoCount
         {
             get
             {
@@ -225,14 +245,20 @@ namespace Invector.vShooter
                     bool isValidAmmo = false;
                     int totalAmmo = 0;
                     checkAmmoHandle.Invoke(ref isValidAmmo, ref totalAmmo);
-                    if (isValidAmmo) return totalAmmo;
-                    else return ammo;
+                    if (isValidAmmo)
+                    {
+                        return totalAmmo;
+                    }
+                    else
+                    {
+                        return ammo;
+                    }
                 }
                 return ammo;
             }
         }
 
-        public void AddAmmo(int value)
+        public virtual void AddAmmo(int value)
         {
             if (checkAmmoHandle != null && changeAmmoHandle != null)
             {
@@ -241,12 +267,18 @@ namespace Invector.vShooter
                 int totalAmmo = 0;
                 checkAmmoHandle.Invoke(ref isValidAmmo, ref totalAmmo);
                 if (isValidAmmo)
+                {
                     changeAmmoHandle(value);
+                }
                 else
+                {
                     ammo += value;
+                }
             }
             else
+            {
                 ammo += value;
+            }
         }
 
         public override void UseAmmo(int count = 1)
@@ -258,13 +290,18 @@ namespace Invector.vShooter
                 int totalAmmo = 0;
                 checkAmmoHandle.Invoke(ref isValidAmmo, ref totalAmmo);
                 if (isValidAmmo)
+                {
                     changeAmmoHandle(-count);
+                }
                 else
+                {
                     ammo -= count;
+                }
             }
             else
+            {
                 ammo -= count;
-
+            }
         }
 
         public virtual void ReloadEffect()
@@ -292,7 +329,11 @@ namespace Invector.vShooter
         {
             get
             {
-                if (!chargeWeapon) return base.damageMultiplier;
+                if (!chargeWeapon)
+                {
+                    return base.damageMultiplier;
+                }
+
                 return (int)(1 + Mathf.Lerp(0, chargeDamageMultiplier, _charge)) + damageMultiplierMod;
             }
         }
@@ -301,12 +342,16 @@ namespace Invector.vShooter
         {
             get
             {
-                if (!chargeWeapon || !changeVelocityByCharge) return base.velocityMultiplier;
+                if (!chargeWeapon || !changeVelocityByCharge)
+                {
+                    return base.velocityMultiplier;
+                }
+
                 return (1 + Mathf.Lerp(0, chargeVelocityMultiplier, _charge)) + velocityMultiplierMod;
             }
         }
 
-        public void SetScopeZoom(float value)
+        public virtual void SetScopeZoom(float value)
         {
             if (zoomScopeCamera)
             {
@@ -315,15 +360,19 @@ namespace Invector.vShooter
             }
         }
 
-        public void SetActiveAim(bool value)
+        public virtual void SetActiveAim(bool value)
         {
             if (isAiming != value)
             {
                 isAiming = value;
                 if (isAiming)
+                {
                     onEnableAim.Invoke();
+                }
                 else
+                {
                     onDisableAim.Invoke();
+                }
             }
         }
 
@@ -331,15 +380,19 @@ namespace Invector.vShooter
         /// Set if Weapon is using scope
         /// </summary>
         /// <param name="value"></param>
-        public void SetActiveScope(bool value)
+        public virtual void SetActiveScope(bool value)
         {
             if (usingScope != value)
             {
                 usingScope = value;
                 if (usingScope)
+                {
                     onEnableScope.Invoke();
+                }
                 else
+                {
                     onDisableScope.Invoke();
+                }
             }
         }
 
@@ -347,15 +400,28 @@ namespace Invector.vShooter
         /// Set look target point to Zoom scope camera
         /// </summary>
         /// <param name="point"></param>
-        public void SetScopeLookTarget(Vector3 point)
+        public virtual void SetScopeLookTarget(Vector3 point)
         {
             if (zoomScopeCamera)
             {
                 var euler = Quaternion.LookRotation(point - zoomScopeCamera.transform.position, Vector3.up).eulerAngles;
-                if (keepScopeCameraRotationZ) euler.z = muzzle.transform.eulerAngles.z;
+                if (keepScopeCameraRotationZ)
+                {
+                    euler.z = muzzle.transform.eulerAngles.z;
+                }
 
                 zoomScopeCamera.transform.eulerAngles = euler;
             }
+        }
+
+        public virtual void CancelReload()
+        {
+            if (reloadSource.isPlaying)
+            {
+                reloadSource.Stop();
+            }
+
+            onCancelReload.Invoke();
         }
     }
 }

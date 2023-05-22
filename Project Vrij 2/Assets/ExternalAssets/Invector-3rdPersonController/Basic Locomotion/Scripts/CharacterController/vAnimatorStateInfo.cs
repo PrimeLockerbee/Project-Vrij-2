@@ -11,6 +11,21 @@ namespace Invector.vEventSystems
             this.animator = animator;           
         }
 
+        protected int GetCurrentAnimatorLayerUsingTag(string tag)
+        {
+            if (HasTag(tag) && statesRunning[tag].Count > 0)
+            {
+                var layersWithTag = statesRunning[tag];
+                int lastIndexOf = layersWithTag.Count - 1;
+                int currentLayer = layersWithTag[lastIndexOf];
+                return currentLayer;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
         public void RegisterListener()
         {           
             var bhv = animator.GetBehaviours<vAnimatorTagBase>();
@@ -35,25 +50,31 @@ namespace Invector.vEventSystems
         }
 
         Dictionary<string, List<int>> statesRunning = new Dictionary<string, List<int>>();
-        public int currentlayer;
-      
-        internal void AddStateInfo(string tag, int info)
-        {
-            if (!statesRunning.ContainsKey(tag)) statesRunning.Add(tag, new List<int>() { info });
-            else statesRunning[tag].Add(info);
-            currentlayer = info;
-        }
 
-        internal void RemoveStateInfo(string tag, int info)
+        /// <summary>
+        /// Add tag to the layer
+        /// </summary>
+        /// <param name="tag">Tag</param>
+        /// <param name="layer">Animator layer</param>
+        public void AddStateInfo(string tag, int layer)
         {
-            if (statesRunning.ContainsKey(tag) && statesRunning[tag].Exists(_info => _info.Equals(info)))
+            if (!statesRunning.ContainsKey(tag)) statesRunning.Add(tag, new List<int>() { layer });
+            else statesRunning[tag].Add(layer);
+        }
+        /// <summary>
+        /// Remove Tag of the layer
+        /// </summary>
+        /// <param name="tag">Tag</param>
+        /// <param name="layer">Animator layer</param>
+        public void RemoveStateInfo(string tag, int layer)
+        {
+            if (statesRunning.ContainsKey(tag) && statesRunning[tag].Exists(_info => _info.Equals(layer)))
             {
-                var inforef = statesRunning[tag].Find(_info => _info.Equals(info));
+                var inforef = statesRunning[tag].Find(_info => _info.Equals(layer));
                 statesRunning[tag].Remove(inforef);
                 if (statesRunning[tag].Count == 0)
                     statesRunning.Remove(tag);
-            }
-            if (currentlayer == info) currentlayer = -1;
+            }           
         }
 
         /// <summary>
@@ -103,15 +124,35 @@ namespace Invector.vEventSystems
             }
             return has;
         }
-
+        /// <summary>
+        /// Get current animator state info using tag
+        /// </summary>
+        /// <param name="tag">tag</param>
+        /// <returns>if tag exit return AnimatorStateInfo? else return null</returns>
         public AnimatorStateInfo? GetCurrentAnimatorStateUsingTag(string tag)
         {
-            if (currentlayer!=-1 && HasTag(tag) && statesRunning[tag].Exists(_inf =>_inf.Equals(currentlayer)))
-            { 
-                return animator.GetCurrentAnimatorStateInfo(currentlayer);
+            int currentLayer = 0;
+            if (HasAnimatorLayerUsingTag(tag,out currentLayer))
+            {              
+                return animator.GetCurrentAnimatorStateInfo(currentLayer);
             }
-            else return null;
+            else
+            {
+                return null;
+            }
+        }
+     
+     
+        /// <summary>
+        /// Check if Animator has some Layer using specific tag, and return the layer result
+        /// </summary>
+        /// <param name="tag">tag to check</param>
+        /// <param name="layer">Layer result</param>
+        /// <returns></returns>
+        public bool HasAnimatorLayerUsingTag(string tag,out int layer)
+        {            
+            layer = GetCurrentAnimatorLayerUsingTag(tag);
+            return layer!=-1;
         }
     }
-
 }

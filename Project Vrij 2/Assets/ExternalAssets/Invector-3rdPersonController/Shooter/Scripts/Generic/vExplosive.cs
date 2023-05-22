@@ -1,8 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Invector
 {
+    using System.Collections.Generic;
     using vEventSystems;
     [vClassHeader("Explosive", openClose = false)]
     public class vExplosive : vMonoBehaviour
@@ -25,7 +26,7 @@ namespace Invector
         [SerializeField] protected OnUpdateTime onUpdateTimer;
         public UnityEngine.Events.UnityEvent onExplode;
         private bool inTimer;
-        private ArrayList collidersReached;
+        private List<GameObject> collidersReached;
 
         void OnDrawGizmosSelected()
         {
@@ -52,7 +53,7 @@ namespace Invector
 
         protected virtual void Start()
         {
-            collidersReached = new ArrayList();
+            collidersReached = new List<GameObject>();
             if (method == ExplosiveMethod.timer)
             {
                 StartCoroutine(StartTimer());
@@ -71,7 +72,7 @@ namespace Invector
                 {
                     yield return new WaitForEndOfFrame();
                     time = Time.time - startTime;
-                    onUpdateTimer.Invoke(normalizeTime?( time/ timeToExplode) :time);
+                    onUpdateTimer.Invoke(normalizeTime ? (time / timeToExplode) : time);
                 }
                 if (gameObject)
                 {
@@ -100,15 +101,20 @@ namespace Invector
             onExplode.Invoke();
             var colliders = Physics.OverlapSphere(transform.position, maxExplosionRadius, applyDamageLayer);
 
+            if(collidersReached == null)
+            {
+                collidersReached = new List<GameObject>();
+            }
+
             for (int i = 0; i < colliders.Length; ++i)
             {
-                if (!collidersReached.Contains(colliders[i].gameObject))
+                if (colliders[i] != null && colliders[i].gameObject != null && !collidersReached.Contains(colliders[i].gameObject))
                 {
                     collidersReached.Add(colliders[i].gameObject);
                     var _damage = new vDamage(damage);
                     _damage.sender = transform;
                     _damage.hitPosition = colliders[i].ClosestPointOnBounds(transform.position);
-                    _damage.receiver = colliders[i].transform;
+                    _damage.receiver = colliders[i].transform;                                        
                     var distance = Vector3.Distance(transform.position, _damage.hitPosition);
                     var damageValue = distance <= minExplosionRadius ? damage.damageValue : GetPercentageForce(distance, damage.damageValue);
                     _damage.activeRagdoll = distance > maxExplosionRadius * 0.5f ? false : _damage.activeRagdoll;

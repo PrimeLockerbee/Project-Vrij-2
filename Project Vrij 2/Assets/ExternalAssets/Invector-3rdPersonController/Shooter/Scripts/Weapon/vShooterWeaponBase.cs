@@ -38,10 +38,12 @@ namespace Invector.vShooter
         public float velocity = 380;
         [Tooltip("Use the DropOffStart and DropOffEnd to calc damage by distance using min and max damage")]
         public bool damageByDistance = true;
-        [Tooltip("Min distance to apply damage")]
-        public float DropOffStart = 8f;
-        [Tooltip("Max distance to apply damage")]
-        public float DropOffEnd = 50f;
+        [Tooltip("Min distance to apply damage, used to evaluate the damage between minDamage and maxDamage")]
+        [UnityEngine.Serialization.FormerlySerializedAs("DropOffStart")]
+        public float minDamageDistance = 8f;
+        [Tooltip("Max distance to apply damage, used to evaluate the damage between minDamage and maxDamage")]
+        [UnityEngine.Serialization.FormerlySerializedAs("DropOffEnd")]
+        public float maxDamageDistance = 50f;
         [Tooltip("Minimum damage caused by the shot, regardless the distance")]
         public int minDamage;
         [Tooltip("Maximum damage caused by the close shot")]
@@ -184,6 +186,7 @@ namespace Invector.vShooter
         /// <returns></returns>
         public virtual bool HasAmmo()
         {
+            
             return isInfinityAmmo || ammo > 0;
         }
         #endregion
@@ -226,7 +229,7 @@ namespace Invector.vShooter
             {
                 for (int i = 0; i < projectilesPerShot; i++)
                 {
-                    var dispersionDir = Dispersion(dir.normalized, DropOffEnd, dispersion);
+                    var dispersionDir = Dispersion(dir.normalized, maxDamageDistance, dispersion);
                     var spreadRotation = Quaternion.LookRotation(dispersionDir);
                     bulletObject = Instantiate(projectile, muzzle.transform.position, spreadRotation) as GameObject;
 
@@ -240,8 +243,8 @@ namespace Invector.vShooter
                     pCtrl.damageByDistance = damageByDistance;
                     pCtrl.maxDamage = (int)((maxDamage / projectilesPerShot) * damageMultiplier);
                     pCtrl.minDamage = (int)((minDamage / projectilesPerShot) * damageMultiplier);
-                    pCtrl.DropOffStart = DropOffStart;
-                    pCtrl.DropOffEnd = DropOffEnd;
+                    pCtrl.minDamageDistance = minDamageDistance;
+                    pCtrl.maxDamageDistance = maxDamageDistance;
                     onInstantiateProjectile.Invoke(pCtrl);
                     velocityChanged = velocity * velocityMultiplier;
                     StartCoroutine(ApplyForceToBullet(bulletObject, dispersionDir, velocityChanged));
@@ -261,8 +264,8 @@ namespace Invector.vShooter
                 pCtrl.damageByDistance = damageByDistance;
                 pCtrl.maxDamage = (int)((maxDamage / projectilesPerShot) * damageMultiplier);
                 pCtrl.minDamage = (int)((minDamage / projectilesPerShot) * damageMultiplier);
-                pCtrl.DropOffStart = DropOffStart;
-                pCtrl.DropOffEnd = DropOffEnd;
+                pCtrl.minDamageDistance = minDamageDistance;
+                pCtrl.maxDamageDistance = maxDamageDistance;
                 onInstantiateProjectile.Invoke(pCtrl);
                 velocityChanged = velocity * velocityMultiplier;
 

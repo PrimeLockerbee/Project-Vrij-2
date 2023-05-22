@@ -17,34 +17,25 @@ namespace Invector.vShooter
         public ProjectilePassDamage onPassDamage;
         public ProjectileCastColliderEvent onCastCollider;
         public ProjectileCastColliderEvent onDestroyProjectile;
-        [HideInInspector]
-        public bool damageByDistance;
-        [HideInInspector]
-        public int minDamage;
-        [HideInInspector]
-        public int maxDamage;
-        [HideInInspector]
-        public float DropOffStart = 8f;
-        [HideInInspector]
-        public float velocity = 580;
-        [HideInInspector]
-        public float DropOffEnd = 50f;
-        [HideInInspector]
-        public Vector3 startPosition;
-        [HideInInspector]
-        public LayerMask hitLayer = -1;
-        [HideInInspector]
-        public List<string> ignoreTags;
-        [HideInInspector]
-        public Transform shooterTransform;
-
         public vProjectileInstantiateData instantiateData;
 
+        internal bool damageByDistance;
+        internal float velocity = 580;
+        internal int minDamage;
+        internal int maxDamage;
+        internal float minDamageDistance = 8f;  
+        internal float maxDamageDistance = 50f; 
+        internal Vector3 startPosition;
+        internal LayerMask hitLayer = -1;  
+        internal List<string> ignoreTags = new List<string>();  
+        internal Transform shooterTransform;
+
+    
         protected Vector3 previousPosition;
         protected Rigidbody _rigidBody;
         protected Color debugColor = Color.green;
-        private int debugLife;
-        private float castDist;
+        protected int debugLife;
+        protected float castDist;
 
         protected virtual void Start()
         {
@@ -77,9 +68,9 @@ namespace Invector.vShooter
                         var damageDifence = maxDamage - minDamage;
 
                         //Calc damage per distance
-                        if (dist - DropOffStart >= 0)
+                        if (dist - minDamageDistance >= 0)
                         {
-                            int percentComplete = (int)System.Math.Round((double)(100 * (dist - DropOffStart)) / (DropOffEnd - DropOffStart));
+                            int percentComplete = (int)System.Math.Round((double)(100 * (dist - minDamageDistance)) / (maxDamageDistance - minDamageDistance));
                             result = Mathf.Clamp(percentComplete * 0.01f, 0, 1f);
                             damage.damageValue = maxDamage - (int)(damageDifence * result);
                         }
@@ -88,7 +79,7 @@ namespace Invector.vShooter
                     }
                     damage.hitPosition = hitInfo.point;
                     damage.receiver = hitInfo.collider.transform;
-
+                    damage.force = transform.forward * damage.damageValue * forceMultiplier;
                     if (damage.damageValue > 0)
                     {
                         onPassDamage.Invoke(damage);

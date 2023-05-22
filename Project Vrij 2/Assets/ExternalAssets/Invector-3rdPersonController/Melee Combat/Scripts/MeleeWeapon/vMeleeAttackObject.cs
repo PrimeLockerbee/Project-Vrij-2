@@ -56,11 +56,18 @@ namespace Invector.vMelee
                 var hitCollider = hitBoxes[i];
                 hitCollider.trigger.enabled = value;
                 if (value == false && targetColliders != null)
+                {
                     targetColliders[hitCollider].Clear();
+                }
             }
             if (value)
+            {
                 onEnableDamage.Invoke();
-            else onDisableDamage.Invoke();
+            }
+            else
+            {
+                onDisableDamage.Invoke();
+            }
         }
 
         /// <summary>
@@ -76,8 +83,10 @@ namespace Invector.vMelee
                 var inDamage = false;
                 var inRecoil = false;
 
-                if (meleeManager == null) 
+                if (meleeManager == null)
+                {
                     meleeManager = GetComponentInParent<vMeleeManager>();
+                }
 
                 //check if meleeManager exists and apply his hitProperties to this
                 HitProperties _hitProperties = meleeManager.hitProperties;
@@ -86,13 +95,13 @@ namespace Invector.vMelee
                 if (((hitBox.triggerType & vHitBoxType.Damage) != 0) && _hitProperties.hitDamageTags == null || _hitProperties.hitDamageTags.Count == 0)
                 {
                     inDamage = true;
-                }                    
+                }
                 else if (((hitBox.triggerType & vHitBoxType.Damage) != 0) && _hitProperties.hitDamageTags.Contains(other.tag))
                 {
                     inDamage = true;
-                }                    
+                }
                 // recoil conditions  
-                else if (((hitBox.triggerType & vHitBoxType.Recoil) != 0) && 
+                else if (((hitBox.triggerType & vHitBoxType.Recoil) != 0) &&
                     (_hitProperties.hitRecoilLayer == (_hitProperties.hitRecoilLayer | (1 << other.gameObject.layer))))
                 {
                     inRecoil = true;
@@ -111,22 +120,29 @@ namespace Invector.vMelee
                         // if meleeManager is null the damage will be directly applied
                         // Finally the OnDamageHit event is called
                         if (meleeManager)
-                        {
-                            meleeManager.OnDamageHit(hitInfo);
-                        }                            
+                        {                            
+                            meleeManager.OnDamageHit(ref hitInfo);
+                        }
                         else
                         {
                             damage.sender = overrideDamageSender ? overrideDamageSender : transform;
                             ApplyDamage(hitBox, other, damage);
                         }
 
-                        onDamageHit.Invoke(hitInfo);
+                        if (!hitInfo.targetIsBlocking)
+                        {
+                            onDamageHit.Invoke(hitInfo);
+                        }
                     }
 
                     // recoil just work with OnRecoilHit event and meleeManger
                     if (inRecoil == true)
                     {
-                        if (meleeManager) meleeManager.OnRecoilHit(hitInfo);
+                        if (meleeManager)
+                        {
+                            meleeManager.OnRecoilHit(hitInfo);
+                        }
+
                         onRecoilHit.Invoke(hitInfo);
                     }
                 }
@@ -139,13 +155,15 @@ namespace Invector.vMelee
         /// <param name="hitBox">vHitBox object</param>
         /// <param name="other">collider target</param>
         /// <param name="damage"> damage</param>
-        public void ApplyDamage(vHitBox hitBox, Collider other, vDamage damage)
+        public bool ApplyDamage(vHitBox hitBox, Collider other, vDamage damage)
         {
             vDamage _damage = new vDamage(damage);
             _damage.receiver = other.transform;
-            _damage.damageValue = (int)Mathf.RoundToInt(((float)(damage.damageValue + damageModifier) * (((float)hitBox.damagePercentage) * 0.01f)));
+            _damage.damageValue = Mathf.RoundToInt(((damage.damageValue + damageModifier) * (hitBox.damagePercentage * 0.01f)));
             _damage.hitPosition = hitBox.transform.position;
             other.gameObject.ApplyDamage(_damage, meleeManager.fighter);
+
+            return _damage.hitReaction;
         }
     }
 }
@@ -162,6 +180,7 @@ namespace Invector.vMelee
         public vHitBox hitBox;
         public Vector3 hitPoint;
         public Collider targetCollider;
+        public bool targetIsBlocking;
         public vHitInfo(vMeleeAttackObject attackObject, vHitBox hitBox, Collider targetCollider, Vector3 hitPoint)
         {
             this.attackObject = attackObject;

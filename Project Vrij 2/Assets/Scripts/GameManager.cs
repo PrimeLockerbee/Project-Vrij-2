@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//No touching this script without letting me know please (^.^)
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
@@ -45,38 +46,60 @@ public class GameManager : MonoBehaviour
         _cinematicManager.PlayCinematic();
     }
 
-    public void PauseGame()
+    private void Update()
     {
-        Time.timeScale = 0f;
-        isPaused = true;
+        if(isPaused)
+        {
+            Debug.Log("Game is paused.");
+        }
+        if(!isPaused)
+        {
+            Debug.Log("Game is not paused.");
+        }
     }
 
-    public void ResumeGame()
+    #region Pausing
+
+    //Call this to pause the game for a x amount of seconds
+    public void PauseForSeconds(float duration)
     {
+        StartCoroutine(PauseCoroutine(duration));
+    }
+
+    //Pauses the game for x amount of seconds
+    private IEnumerator PauseCoroutine(float duration)
+    {
+        //Pause the game
+        Time.timeScale = 0f;
+        isPaused = true;
+
+        yield return new WaitForSecondsRealtime(duration);
+
+        //Resume the game
         Time.timeScale = 1f;
         isPaused = false;
     }
 
+    //Call this to check if the game is paused or not
     public bool IsGamePaused()
     {
         return isPaused;
     }
 
-    public void LoadLevel(float buildindex)
+    //Call this to pause the game
+    public void PauseGame()
     {
-        //Implement level loading logic here
+        Time.timeScale = 0f;
+
+        isPaused = true;
     }
 
-    public void QuitGame()
+    //Call this to resume the game
+    public void ResumeGame()
     {
-        //Implement game quitting logic here
+        Time.timeScale = 1f;
+
+        isPaused = false;
     }
-
-
-    public void RestartGame()
-    {
-        //Restart or load the initial level
-        LoadLevel(0);
-    }
-
+    #endregion
 }

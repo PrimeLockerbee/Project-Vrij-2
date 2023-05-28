@@ -63,6 +63,7 @@ MonoBehaviour:
     recoil_id: 0
     reaction_id: 0
     damageType: 
+    force: {x: 0, y: 0, z: 0}
   overrideDamageSender: {fileID: 0}
   hitBoxes:
   - {fileID: 4586449753421553302}
@@ -386,6 +387,7 @@ GameObject:
   - component: {fileID: 4361659958926939462}
   - component: {fileID: 4586934421064684662}
   - component: {fileID: 4586397909127600286}
+  - component: {fileID: 2343171827404414583}
   m_Layer: 10
   m_Name: vCompanionAI
   m_TagString: CompanionAI
@@ -691,6 +693,7 @@ MonoBehaviour:
     recoil_id: 0
     reaction_id: 0
     damageType: 
+    force: {x: 0, y: 0, z: 0}
   hitProperties:
     hitDamageTags:
     - Enemy
@@ -716,6 +719,34 @@ MonoBehaviour:
   defaultStaminaRecoveryDelay: 1
   defaultDefenseRate: 50
   defaultDefenseRange: 90
+--- !u!114 &2343171827404414583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4482341449697911958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8714f588967184949b8523460e0c3e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 0}
+  followDistance: 3
+  stoppingDistance: 2
+  moveSpeed: 5
+  stunCooldownTime: 15
+  stunVFXPrefab: {fileID: 1620636520166436, guid: 03188db50dac98346b437f69fd984cf5,
+    type: 3}
+  stunRange: 5
+  stunDuration: 5
+  stunCooldownImage: {fileID: 0}
+  shieldCooldownTime: 20
+  shieldVFXPrefab: {fileID: 1000011978708034, guid: a194658a6cc69e145829d103185febfa,
+    type: 3}
+  shieldSpawn: {fileID: 0}
+  shieldDuration: 5
+  shieldCooldownImage: {fileID: 0}
 --- !u!1 &4482351081076727820
 GameObject:
   m_ObjectHideFlags: 0
@@ -1562,6 +1593,7 @@ MonoBehaviour:
     recoil_id: 0
     reaction_id: 0
     damageType: 
+    force: {x: 0, y: 0, z: 0}
   overrideDamageSender: {fileID: 0}
   hitBoxes:
   - {fileID: 4587033177021616626}
@@ -1769,6 +1801,7 @@ MonoBehaviour:
     recoil_id: 0
     reaction_id: 0
     damageType: 
+    force: {x: 0, y: 0, z: 0}
   overrideDamageSender: {fileID: 0}
   hitBoxes:
   - {fileID: 4587033321550208258}
@@ -1884,6 +1917,7 @@ MonoBehaviour:
     recoil_id: 0
     reaction_id: 0
     damageType: 
+    force: {x: 0, y: 0, z: 0}
   overrideDamageSender: {fileID: 0}
   hitBoxes:
   - {fileID: 4586365721411234910}

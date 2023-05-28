@@ -43,20 +43,36 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _cinematicManager.PlayCinematic();
+        PlayCinematic();
     }
 
     private void Update()
     {
-        if(isPaused)
-        {
-            Debug.Log("Game is paused.");
-        }
-        if(!isPaused)
-        {
-            Debug.Log("Game is not paused.");
-        }
+        //if(isPaused)
+        //{
+        //    Debug.Log("Game is paused.");
+        //}
+        //if(!isPaused)
+        //{
+        //    Debug.Log("Game is not paused.");
+        //}
     }
+
+    #region PlayingCinematic
+
+    private void PlayCinematic()
+    {
+        //Pauses the game
+        //PauseGame();
+
+        //Play your cinematic event
+        _cinematicManager.PlayCinematic();
+
+        //Resume game at end of cinematic with this line of code
+        //ResumeGame();
+    }
+
+    #endregion
 
     #region Pausing
 

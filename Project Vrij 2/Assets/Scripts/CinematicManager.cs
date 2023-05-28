@@ -5,47 +5,29 @@ using UnityEngine.Playables;
 
 public class CinematicManager : MonoBehaviour
 {
-    private PlayableDirector director;
+    public PlayableDirector director;
     public PlayableAsset[] cutScenes;
+    public Collider[] triggers;
 
-    private int currentCutSceneIndex = 0;
-
-    public bool hasPlayed = false;
+    private int currentPlayingIndex = -1; // Track the index of the currently playing cutscene
 
     private void Awake()
     {
         director = GetComponent<PlayableDirector>();
     }
 
-    private void Update()
-    {
-        if (!hasPlayed && director.state == PlayState.Playing && director.time >= director.duration)
-        {
-            hasPlayed = true;
-            director.Stop();
-        }
-    }
 
-    public void PlayCinematic()
+    public void PlayCinematic(int triggerIndex)
     {
-        director.playableAsset = cutScenes[currentCutSceneIndex];
-        director.Play();
-    }
-
-    public void NextCinematic()
-    {
-        currentCutSceneIndex++;
-
-        //Check if there are anymore cutscenes
-        if (currentCutSceneIndex < cutScenes.Length)
+        if (triggerIndex >= 0 && triggerIndex < cutScenes.Length)
         {
-            //Change the active cutscene to the next one
-            director.playableAsset = cutScenes[currentCutSceneIndex];
-        }
-        else
-        {
-            //No more cutscenes left
-            return;
+            if (currentPlayingIndex != triggerIndex) // Check if the cutscene is not already playing
+            {
+                director.Stop(); // Stop the currently playing cutscene
+                director.playableAsset = cutScenes[triggerIndex];
+                director.Play();
+                currentPlayingIndex = triggerIndex;
+            }
         }
     }
 }

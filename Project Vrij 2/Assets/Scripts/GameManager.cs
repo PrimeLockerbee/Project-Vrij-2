@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         //PauseGame();
 
         //Play your cinematic event
-        _cinematicManager.PlayCinematic();
+        _cinematicManager.PlayCinematic(0);
 
         //Resume game at end of cinematic with this line of code
         //ResumeGame();

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Project
   m_RootView: {fileID: 3}
   m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 41
+  controlID: 128
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 193
+  controlID: 191
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 194
+  controlID: 192
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -465,10 +465,10 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 32}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 68b1f8ffa220f9ffba44f9ff547df9ff605dfaff7aa1fbff12bcfbffd617fdffa477feffa0b8feff1e7bffff227bffff10bcffff8ec900005ad0000000d1000020d6000022d6000052d9000054d9000012da0000d8db00003adc00003cdc000096df0000c0e50000c2e500006ce70000bcea000056ec0000
+      scrollPos: {x: 0, y: 608}
+      m_SelectedIDs: 9898ffff
+      m_LastClickedID: -26472
+      m_ExpandedIDs: d8faffffa2770000707f0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -781,9 +781,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -77.036545, y: -11.941303, z: -58.56636}
+    m_Target: {x: -32.28334, y: -8.473114, z: 1.3928599}
     speed: 2
-    m_Value: {x: -77.036545, y: -11.941303, z: -58.56636}
+    m_Value: {x: -32.28334, y: -8.473114, z: 1.3928599}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -830,13 +830,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.05564034, y: 0.83772117, z: -0.12110856, w: -0.5315837}
+    m_Target: {x: -0.043008987, y: -0.9691228, z: 0.11192266, w: -0.22035368}
     speed: 2
-    m_Value: {x: -0.05478724, y: 0.8370149, z: -0.119723424, w: -0.5311034}
+    m_Value: {x: -0.043122105, y: -0.96825194, z: 0.113320716, w: -0.21860269}
   m_Size:
-    m_Target: 1.083663
+    m_Target: 5.95549
     speed: 2
-    m_Value: 1.083663
+    m_Value: 5.95549
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1092,37 +1092,37 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/ExternalAssets/Dark City 2/Assets/Prefabs/Street Lights
+    - Assets/ExternalAssets/Dark City 2/Assets/Prefabs/Background
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/ExternalAssets/Dark City 2/Assets/Prefabs/Street Lights
+  - Assets/ExternalAssets/Dark City 2/Assets/Prefabs/Background
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\ilyas\Documents\GitHub\Project-Vrij-2\Project Vrij
     2
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 180}
-    m_SelectedIDs: f66d0400
-    m_LastClickedID: 290294
-    m_ExpandedIDs: 000000001ebd0300b2bf030030c1030032c103004ec1030066c103006ac103006cc10300de6d0400ea6d040000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 259}
+    m_SelectedIDs: a0a80300
+    m_LastClickedID: 239776
+    m_ExpandedIDs: 00000000baa603005aa8030098a803009aa803009ca8030000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Street Props
-      m_OriginalName: Street Props
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 290296
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_SearchString: 
@@ -1136,7 +1136,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000001ebd0300
+    m_ExpandedIDs: 00000000baa60300
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1163,7 +1163,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

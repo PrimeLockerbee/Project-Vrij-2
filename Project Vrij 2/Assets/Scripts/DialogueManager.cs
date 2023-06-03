@@ -7,25 +7,41 @@ using TMPro;
 public class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI dialogueText;
+    public float displayTime = 2f;
+    //public GameObject nextButton;
+    public GameObject textBackground;
+    public string[] dialogue;
+
     private int currentDialogueIndex = 0;
-    private string[] dialogues = {
-        "Hello, how are you?",
-        "I'm doing great! How about you?",
-        "That's good to hear. Have a nice day!"
-    };
+    private Coroutine displayCoroutine;
+
+    private void Start()
+    {
+        //Start the dialogue
+        StartDialogue();
+    }
+
+    private void Update()
+    {
+        //Check for button press to proceed to next dialogue
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            DisplayNextDialogue();
+        }
+    }
 
     public void StartDialogue()
     {
-        dialogueText.text = dialogues[currentDialogueIndex];
-        currentDialogueIndex++;
+        currentDialogueIndex = 0;
+        DisplayDialogue();
     }
 
-    public void ContinueDialogue()
+    public void DisplayNextDialogue()
     {
-        if (currentDialogueIndex < dialogues.Length)
+        currentDialogueIndex++;
+        if (currentDialogueIndex < dialogue.Length)
         {
-            dialogueText.text = dialogues[currentDialogueIndex];
-            currentDialogueIndex++;
+            DisplayDialogue();
         }
         else
         {
@@ -33,8 +49,31 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EndDialogue()
+    private void DisplayDialogue()
     {
-        // Add any necessary actions after the dialogue ends
+        //Display the text and enable the button
+        dialogueText.text = dialogue[currentDialogueIndex];
+        //nextButton.SetActive(true);
+
+        //Start a coroutine to automatically switch to next dialogue after displayTime seconds
+        if (displayCoroutine != null)
+        {
+            StopCoroutine(displayCoroutine);
+        }
+        displayCoroutine = StartCoroutine(HideDialogueAfterDelay());
+    }
+
+    private IEnumerator HideDialogueAfterDelay()
+    {
+        yield return new WaitForSeconds(displayTime);
+        DisplayNextDialogue();
+    }
+
+    private void EndDialogue()
+    {
+        //Hide the text and disable the button
+        dialogueText.text = "";
+        textBackground.SetActive(false);
+        //nextButton.SetActive(false);
     }
 }

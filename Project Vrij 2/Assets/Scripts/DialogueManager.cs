@@ -8,22 +8,16 @@ public class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI dialogueText;
     public float displayTime = 2f;
-    //public GameObject nextButton;
     public GameObject textBackground;
-    public string[] dialogue;
+    public NPC[] npcs;
 
+    private int currentNPCIndex = 0;
     private int currentDialogueIndex = 0;
     private Coroutine displayCoroutine;
 
-    private void Start()
-    {
-        //Start the dialogue
-        StartDialogue();
-    }
-
     private void Update()
     {
-        //Check for button press to proceed to next dialogue
+        // Check for button press to proceed to next dialogue
         if (Input.GetKeyDown(KeyCode.Space))
         {
             DisplayNextDialogue();
@@ -39,7 +33,7 @@ public class DialogueManager : MonoBehaviour
     public void DisplayNextDialogue()
     {
         currentDialogueIndex++;
-        if (currentDialogueIndex < dialogue.Length)
+        if (currentDialogueIndex < npcs[currentNPCIndex].dialogue.Length)
         {
             DisplayDialogue();
         }
@@ -51,11 +45,11 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayDialogue()
     {
-        //Display the text and enable the button
-        dialogueText.text = dialogue[currentDialogueIndex];
-        //nextButton.SetActive(true);
+        // Display the text and enable the text background
+        dialogueText.text = npcs[currentNPCIndex].dialogue[currentDialogueIndex];
+        textBackground.SetActive(true);
 
-        //Start a coroutine to automatically switch to next dialogue after displayTime seconds
+        // Start a coroutine to automatically switch to next dialogue after displayTime seconds
         if (displayCoroutine != null)
         {
             StopCoroutine(displayCoroutine);
@@ -71,9 +65,22 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
-        //Hide the text and disable the button
+        // Hide the text and disable the text background
         dialogueText.text = "";
         textBackground.SetActive(false);
-        //nextButton.SetActive(false);
     }
+
+    public void ChangeNPC(int npcIndex)
+    {
+        // Change to dialogue for the specified NPC
+        currentNPCIndex = npcIndex;
+        StartDialogue();
+    }
+}
+
+[System.Serializable]
+public class NPC
+{
+    public string name;
+    public string[] dialogue;
 }

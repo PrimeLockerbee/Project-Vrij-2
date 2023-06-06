@@ -9,16 +9,34 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public float displayTime = 2f;
     public GameObject textBackground;
-    public NPC[] npcs;
+    public NPC npc;
 
-    private int currentNPCIndex = 0;
     private int currentDialogueIndex = 0;
     private Coroutine displayCoroutine;
+    private bool isPlayerInRange = false;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInRange = true;
+            StartDialogue();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInRange = false;
+            EndDialogue();
+        }
+    }
 
     private void Update()
     {
         // Check for button press to proceed to next dialogue
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.Space))
         {
             DisplayNextDialogue();
         }
@@ -33,7 +51,7 @@ public class DialogueManager : MonoBehaviour
     public void DisplayNextDialogue()
     {
         currentDialogueIndex++;
-        if (currentDialogueIndex < npcs[currentNPCIndex].dialogue.Length)
+        if (currentDialogueIndex < npc.dialogue.Length)
         {
             DisplayDialogue();
         }
@@ -46,7 +64,7 @@ public class DialogueManager : MonoBehaviour
     private void DisplayDialogue()
     {
         // Display the text and enable the text background
-        dialogueText.text = npcs[currentNPCIndex].dialogue[currentDialogueIndex];
+        dialogueText.text = npc.dialogue[currentDialogueIndex];
         textBackground.SetActive(true);
 
         // Start a coroutine to automatically switch to next dialogue after displayTime seconds
@@ -68,13 +86,6 @@ public class DialogueManager : MonoBehaviour
         // Hide the text and disable the text background
         dialogueText.text = "";
         textBackground.SetActive(false);
-    }
-
-    public void ChangeNPC(int npcIndex)
-    {
-        // Change to dialogue for the specified NPC
-        currentNPCIndex = npcIndex;
-        StartDialogue();
     }
 }
 

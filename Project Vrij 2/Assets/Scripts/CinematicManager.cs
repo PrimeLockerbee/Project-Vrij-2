@@ -9,7 +9,7 @@ public class CinematicManager : MonoBehaviour
     public PlayableAsset[] cutScenes;
     public Collider[] triggers;
 
-    private int currentPlayingIndex = -1; // Track the index of the currently playing cutscene
+    public int currentPlayingIndex = -1; // Track the index of the currently playing cutscene
 
     private void Awake()
     {

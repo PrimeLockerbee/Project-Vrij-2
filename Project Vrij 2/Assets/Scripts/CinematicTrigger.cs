@@ -12,6 +12,7 @@ public class CinematicTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log(triggerIndex);
             _cinematicManager.PlayCinematic(triggerIndex);
         }
     }

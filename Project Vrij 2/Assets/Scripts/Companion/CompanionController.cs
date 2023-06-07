@@ -36,6 +36,9 @@ namespace Invector.vCharacterController.AI
         public float shieldDuration = 5.0f;    //the duration of the stun effect
         public Image shieldCooldownImage;          //the image to use for the cooldown visual representation
 
+        public bool hasBeenToMechanic = false;
+        public bool mechanicCutSceneHasPlayed = false;
+
         void Start()
         {
             //get the NavMeshAgent component
@@ -74,8 +77,11 @@ namespace Invector.vCharacterController.AI
                     navMeshAgent.isStopped = false;
                 }
 
-                StunEffect();
-                ShieldEffect();
+                if(mechanicCutSceneHasPlayed)
+                {
+                    StunEffect();
+                    ShieldEffect();
+                }
             }
         }
 
@@ -175,6 +181,16 @@ namespace Invector.vCharacterController.AI
             agent.stopMove = false;
 
             Destroy(stunVFX);
+        }
+
+        public void MechanicCutsceneHasPlayed()
+        {
+            mechanicCutSceneHasPlayed = true;
+        }
+
+        public void HasBeenToMechanic()
+        {
+            hasBeenToMechanic = true; 
         }
     }
 }

@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
+using TMPro;
 
 public class ObjectiveCompass : MonoBehaviour
 {
     public Transform indicatorTransform;
     public List<Objective> objectives;
+    public TextMeshProUGUI objectiveText;
     private int currentObjectiveIndex = 0;
 
     void Start()
@@ -48,14 +48,18 @@ public class ObjectiveCompass : MonoBehaviour
 
     void SetObjectiveActive(int index)
     {
-        objectives[index].isActive = true;
-        objectives[index].gameObject.SetActive(true);
+        Objective objective = objectives[index];
+        objective.isActive = true;
+        objective.gameObject.SetActive(true);
+        objectiveText.gameObject.SetActive(true); // Activate the shared objective text
+        objectiveText.text = objective.objectiveDescription; // Update the text
     }
 
     void SetObjectiveInactive(int index)
     {
-        objectives[index].isActive = false;
-        objectives[index].gameObject.SetActive(false);
+        Objective objective = objectives[index];
+        objective.isActive = false;
+        objective.gameObject.SetActive(false);
+        objectiveText.gameObject.SetActive(false); // Deactivate the shared objective text
     }
 }
-

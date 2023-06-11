@@ -6,7 +6,7 @@ using TMPro;
 public class TimerController : MonoBehaviour
 {
     public float totalTime = 60f; // Total time in seconds for the effect
-    public float vignetteIntensity = 0f; // Initial intensity of the vignette
+    //public float vignetteIntensity = 0f; // Initial intensity of the vignette
     public float heartbeatVolume = 0.05f; // Initial volume of the heartbeat sound (starting value)
     public float textDisplayInterval = 5f; // Time interval between text displays
 

@@ -1218,7 +1218,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 900431529303129854}
-  - component: {fileID: 900431529292184054}
   - component: {fileID: 900431529308163168}
   - component: {fileID: 900431529299841178}
   m_Layer: 8
@@ -1245,22 +1244,6 @@ Transform:
   m_Father: {fileID: 5761232919463702308}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -88.354, z: 0}
---- !u!114 &900431529292184054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900431529302862236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19c789670a80b704eba4dfebed94a111, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  header: COMMENT
-  comment: This example has both Melee and Shooter features included and working
-    together, you have several options to play with to create something unique.
-  inEdit: 0
 --- !u!54 &900431529308163168
 Rigidbody:
   m_ObjectHideFlags: 0

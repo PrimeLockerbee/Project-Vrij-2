@@ -15,7 +15,7 @@ namespace Invector.vCharacterController.AI
 
 
         private NavMeshAgent navMeshAgent;  //the NavMeshAgent component
-        private bool isFollowing = false;   //flag to indicate if the companion is following the player
+        public bool isFollowing = false;   //flag to indicate if the companion is following the player
 
         //Stun
         private bool isStunCooldown = false;    //flag to indicate if the stun ability is on cooldown

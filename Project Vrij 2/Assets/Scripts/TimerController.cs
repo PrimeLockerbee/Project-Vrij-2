@@ -10,18 +10,18 @@ public class TimerController : MonoBehaviour
 
     private float initialHeartbeatVolume; // Store the initial volume for reference
     private float timeElapsed = 0f; // Current time elapsed
-    private VignetteEffect vignetteEffect; // Reference to the vignette post-processing effect
+    //private VignetteEffect vignetteEffect; // Reference to the vignette post-processing effect
     private AudioSource heartbeatAudio; // Reference to the audio source playing the heartbeat sound
 
     // Add the Start() and Update() methods
     void Start()
     {
         // Get the vignette effect and audio source components
-        vignetteEffect = Camera.main.GetComponent<VignetteEffect>();
+        //vignetteEffect = Camera.main.GetComponent<VignetteEffect>();
         heartbeatAudio = GetComponent<AudioSource>();
 
         // Set the initial intensity and volume
-        vignetteEffect.intensity = vignetteIntensity;
+        //vignetteEffect.intensity = vignetteIntensity;
         initialHeartbeatVolume = heartbeatVolume;
         heartbeatAudio.volume = initialHeartbeatVolume;
     }
@@ -35,7 +35,7 @@ public class TimerController : MonoBehaviour
         float progress = Mathf.Clamp01(timeElapsed / totalTime);
 
         // Update the intensity of the vignette effect
-        vignetteEffect.intensity = vignetteIntensity * progress;
+        //vignetteEffect.intensity = vignetteIntensity * progress;
 
         // Update the volume of the heartbeat sound
         heartbeatAudio.volume = initialHeartbeatVolume + (1f - initialHeartbeatVolume) * progress;

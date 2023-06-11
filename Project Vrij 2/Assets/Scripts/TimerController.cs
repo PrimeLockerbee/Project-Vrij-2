@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Rendering.PostProcessing;
 
 public class TimerController : MonoBehaviour
 {
     public float totalTime = 60f; // Total time in seconds for the effect
     public float vignetteIntensity = 0f; // Initial intensity of the vignette
+    public float vignetteMaxIntensity = 1f; // Maximum intensity of the vignette
     public float heartbeatVolume = 0.05f; // Initial volume of the heartbeat sound (starting value)
     public float textDisplayInterval = 5f; // Time interval between text displays
 
@@ -16,24 +18,29 @@ public class TimerController : MonoBehaviour
     public GameObject functionTarget; // Reference to the GameObject to call the function on
     public string functionName = "FunctionToCall"; // Name of the function to call on the target GameObject
 
+    public PostProcessVolume postProcessVolume; // Reference to the PostProcessVolume component
+    public AudioSource heartbeatAudio; // Reference to the heartbeat audio source
+
     private float initialHeartbeatVolume; // Store the initial volume for reference
     private float timeElapsed = 0f; // Current time elapsed
     private float textDisplayTimer = 0f; // Timer for text display
     private int currentTextIndex = 0; // Index of the current text being displayed
 
-    private AudioSource heartbeatAudio; // Reference to the audio source playing the heartbeat sound
     private GameObject parentObject; // Reference to the parent GameObject
 
     private bool isTextDisplaying = true; // Flag to track if text is currently being displayed
 
+    private Vignette vignetteEffect; // Reference to the vignette post-processing effect
+
     void Start()
     {
-        heartbeatAudio = GetComponent<AudioSource>();
-
         initialHeartbeatVolume = heartbeatVolume;
         heartbeatAudio.volume = initialHeartbeatVolume;
 
         parentObject = textDisplay.transform.parent.gameObject;
+
+        // Get the vignette effect from the PostProcessVolume
+        vignetteEffect = postProcessVolume.profile.GetSetting<Vignette>();
     }
 
     void Update()
@@ -42,6 +49,9 @@ public class TimerController : MonoBehaviour
         textDisplayTimer += Time.deltaTime;
 
         float progress = Mathf.Clamp01(timeElapsed / totalTime);
+
+        // Update the vignette intensity
+        vignetteEffect.intensity.value = Mathf.Lerp(vignetteIntensity, vignetteMaxIntensity, progress);
 
         // Check if it's time to display text
         if (isTextDisplaying && textDisplayTimer >= textDisplayInterval)
@@ -71,7 +81,8 @@ public class TimerController : MonoBehaviour
             parentObject.SetActive(true);
         }
 
-        // Update other effects (vignette, heartbeat volume)...
+        // Update heartbeat volume
+        heartbeatAudio.volume = initialHeartbeatVolume + (1f - initialHeartbeatVolume) * progress;
     }
 
     private string GetNextTextToDisplay()

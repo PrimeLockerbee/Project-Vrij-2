@@ -322,6 +322,23 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5938673202064555379}
     m_Modifications:
+    - target: {fileID: 7020313090331027161, guid: 5ed6285b13c982744ad03fd68cfc16b0,
+        type: 3}
+      propertyPath: triggers.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020313090331027161, guid: 5ed6285b13c982744ad03fd68cfc16b0,
+        type: 3}
+      propertyPath: cutScenes.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4da47169df7b7d34783259a00419a0ee,
+        type: 2}
+    - target: {fileID: 7020313090331027161, guid: 5ed6285b13c982744ad03fd68cfc16b0,
+        type: 3}
+      propertyPath: cutScenes.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 78a01f6b6eb147744aaa5861b44fe3d6,
+        type: 2}
     - target: {fileID: 7020313090331027164, guid: 5ed6285b13c982744ad03fd68cfc16b0,
         type: 3}
       propertyPath: m_Name

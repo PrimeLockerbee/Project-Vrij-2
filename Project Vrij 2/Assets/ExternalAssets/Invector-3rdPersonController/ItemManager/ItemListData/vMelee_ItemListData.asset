@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11411124}
   - {fileID: 11437076}
   - {fileID: 11411708}
-  inEdition: 1
+  inEdition: 0
   itemsHidden: 1
 --- !u!114 &11411124
 MonoBehaviour:

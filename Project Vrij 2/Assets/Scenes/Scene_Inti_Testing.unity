@@ -318,6 +318,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: mainchar_lp_uv
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 52375668620366643975d7d1dc0b7481,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52375668620366643975d7d1dc0b7481, type: 3}
 --- !u!1 &177167826 stripped
@@ -886,6 +891,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wobot_V2.9
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c1fcd289bf5e2f64b93fe1a96b2e7eda,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1fcd289bf5e2f64b93fe1a96b2e7eda, type: 3}
 --- !u!1 &663898756
@@ -1016,6 +1026,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NPCnoMask_LP_V2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 27b6ef554ec515e409d69e02d4701112,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27b6ef554ec515e409d69e02d4701112, type: 3}
@@ -1328,6 +1343,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WobotV3.2.3
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3c347af43378bdc49bc32234f98bf6c2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c347af43378bdc49bc32234f98bf6c2, type: 3}
 --- !u!1001 &1018837772
@@ -1396,6 +1416,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NPCwithMask_LP_V2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8c0a2186c52e0b446af82508f06effc7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c0a2186c52e0b446af82508f06effc7, type: 3}
@@ -1492,6 +1517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WobotV3.2.2(animations)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: decf85262ea4ebc4aa255a905846ef94,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: decf85262ea4ebc4aa255a905846ef94, type: 3}
@@ -1700,6 +1730,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WobotV3.2.4(AllAnims)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2702a86dd983475409d60a855a32b50d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2702a86dd983475409d60a855a32b50d, type: 3}

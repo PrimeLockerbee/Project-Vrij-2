@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -48,14 +49,14 @@ MonoBehaviour:
       head: {x: 0, y: 0}
   standingAiming:
     weaponHandOffset:
-      position: {x: 0, y: 0, z: 0}
-      eulerAngles: {x: 0, y: 0, z: 0}
+      position: {x: 0.26725587, y: 0.0034664273, z: 0.29334718}
+      eulerAngles: {x: -0, y: 0, z: 0}
     weaponHintOffset:
       position: {x: 0, y: 0, z: 0}
       eulerAngles: {x: -0, y: 0, z: 0}
     supportHandOffset:
       position: {x: 0, y: 0, z: 0}
-      eulerAngles: {x: 0, y: 0, z: 0}
+      eulerAngles: {x: -0, y: 0, z: 0}
     supportHintOffset:
       position: {x: 0, y: 0, z: 0}
       eulerAngles: {x: -0, y: 0, z: 0}

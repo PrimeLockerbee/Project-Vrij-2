@@ -33,6 +33,10 @@ public class TimerController : MonoBehaviour
     public float vignetteIntensity = 0.1f; // Initial intensity of the vignette
     public float vignetteMaxIntensity = 0.6f; // Maximum intensity of the vignette
 
+    private DepthOfField dofEffect;
+    public float dofFocalLength = 10;
+    public float dofFocalLengthMax = 50;
+
     void Start()
     {
         initialHeartbeatVolume = heartbeatVolume;
@@ -42,6 +46,9 @@ public class TimerController : MonoBehaviour
 
         // Get the vignette effect from the PostProcessVolume
         vignetteEffect = postProcessVolume.profile.GetSetting<Vignette>();
+
+        // Get the vignette effect from the PostProcessVolume
+        dofEffect = postProcessVolume.profile.GetSetting<DepthOfField>();
     }
 
     void Update()
@@ -53,6 +60,8 @@ public class TimerController : MonoBehaviour
 
         // Update the vignette intensity
         vignetteEffect.intensity.value = Mathf.Lerp(vignetteIntensity, vignetteMaxIntensity, progress);
+        // Update the vignette intensity
+        dofEffect.focalLength.value = Mathf.Lerp(dofFocalLength, dofFocalLengthMax, progress);
 
         // Check if it's time to display text
         if (isTextDisplaying && textDisplayTimer >= textDisplayInterval)
@@ -64,12 +73,6 @@ public class TimerController : MonoBehaviour
             {
                 // All texts have been displayed
                 isTextDisplaying = false;
-
-                // Call the specified function on the target GameObject
-                if (functionTarget != null)
-                {
-                    functionTarget.SendMessage(functionName);
-                }
             }
             else
             {
@@ -84,6 +87,17 @@ public class TimerController : MonoBehaviour
 
         // Update heartbeat volume
         heartbeatAudio.volume = initialHeartbeatVolume + (1f - initialHeartbeatVolume) * progress;
+
+        if (timeElapsed >= totalTime)
+        {
+            // Call the specified function on the target GameObject
+            if (functionTarget != null)
+            {
+                functionTarget.SendMessage(functionName);
+            }
+        }
+
+
     }
 
     private string GetNextTextToDisplay()

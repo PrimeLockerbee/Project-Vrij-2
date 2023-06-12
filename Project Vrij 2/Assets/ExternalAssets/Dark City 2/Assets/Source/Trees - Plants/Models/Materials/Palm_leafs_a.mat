@@ -121,7 +121,7 @@ Material:
     - _TransNormalDistortion: 0
     - _TransScattering: 1
     - _TransShadow: 0
-    - _Translucency: 3.8
+    - _Translucency: 0
     - _UVSec: 0
     - _WindNoiseTiling: 0.586
     - _WindPower: 0.14

@@ -7,8 +7,7 @@ using UnityEngine.Rendering.PostProcessing;
 public class TimerController : MonoBehaviour
 {
     public float totalTime = 60f; // Total time in seconds for the effect
-    public float vignetteIntensity = 0f; // Initial intensity of the vignette
-    public float vignetteMaxIntensity = 1f; // Maximum intensity of the vignette
+
     public float heartbeatVolume = 0.05f; // Initial volume of the heartbeat sound (starting value)
     public float textDisplayInterval = 5f; // Time interval between text displays
 
@@ -31,6 +30,8 @@ public class TimerController : MonoBehaviour
     private bool isTextDisplaying = true; // Flag to track if text is currently being displayed
 
     private Vignette vignetteEffect; // Reference to the vignette post-processing effect
+    public float vignetteIntensity = 0.1f; // Initial intensity of the vignette
+    public float vignetteMaxIntensity = 0.6f; // Maximum intensity of the vignette
 
     void Start()
     {

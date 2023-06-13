@@ -69,7 +69,7 @@ Material:
         m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _Logo:
-        m_Texture: {fileID: 2800000, guid: e8981293242347d47a7a7f7fb5a8650a, type: 3}
+        m_Texture: {fileID: 2800000, guid: e83eac49b25bc984e8b5b32e0feddf65, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:

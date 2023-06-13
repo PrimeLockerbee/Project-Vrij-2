@@ -1,8 +1,14 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Project Vrij 2/Assets/Scenes/Final Scenes/Menu/LoseMenu.unity.meta
 guid: f28549f9d050cf2459fae04fa8c53b52
 timeCreated: 1571402440
 licenseType: Store
 DefaultImporter:
+========
+guid: 9da06dbb25f0440438fdcf2d77e4a069
+PrefabImporter:
+  externalObjects: {}
+>>>>>>>> ilyas:Project Vrij 2/Assets/Art/Scene Prefab/Apotheek With Parallax.prefab.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 

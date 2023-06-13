@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Final Scenes/Final Game Scene/FinalGame.unity
     guid: 349d66f20da1f984da33960da55a55bc
+  - enabled: 1
+    path: Assets/Scenes/Final Scenes/Menu/EndMenu.unity
+    guid: 69729a1817935d84db14a7ed59894f73
+  - enabled: 1
+    path: Assets/Scenes/Final Scenes/Menu/LoseMenu.unity
+    guid: b8291d8103303ac49bd77dc920eb229c
   m_configObjects: {}

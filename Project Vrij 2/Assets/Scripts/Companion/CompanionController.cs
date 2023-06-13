@@ -39,6 +39,8 @@ namespace Invector.vCharacterController.AI
         public bool hasBeenToMechanic = false;
         public bool mechanicCutSceneHasPlayed = false;
 
+        GameObject vfxBroken;
+
         void Start()
         {
             //get the NavMeshAgent component
@@ -190,7 +192,8 @@ namespace Invector.vCharacterController.AI
 
         public void HasBeenToMechanic()
         {
-            hasBeenToMechanic = true; 
+            hasBeenToMechanic = true;
+            vfxBroken.SetActive(false);
         }
     }
 }

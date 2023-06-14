@@ -59,9 +59,9 @@ public class TimerController : MonoBehaviour
         float progress = Mathf.Clamp01(timeElapsed / totalTime);
 
         // Update the vignette intensity
-        vignetteEffect.intensity.value = Mathf.Lerp(vignetteIntensity, vignetteMaxIntensity, progress);
-        // Update the vignette intensity
-        dofEffect.focalLength.value = Mathf.Lerp(dofFocalLength, dofFocalLengthMax, progress);
+        vignetteEffect.intensity.value = Mathf.LerpUnclamped(0, vignetteMaxIntensity, progress * progress);
+        // Update the depth of field focal length
+        dofEffect.focalLength.value = Mathf.LerpUnclamped(dofFocalLength, dofFocalLengthMax, progress);
 
         // Check if it's time to display text
         if (isTextDisplaying && textDisplayTimer >= textDisplayInterval)

@@ -56,6 +56,11 @@ public class GameManager : MonoBehaviour
         //{
         //    Debug.Log("Game is not paused.");
         //}
+
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     #region PlayingCinematic

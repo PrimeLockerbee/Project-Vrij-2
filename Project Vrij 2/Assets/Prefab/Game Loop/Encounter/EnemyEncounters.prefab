@@ -301,6 +301,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d916c404117c2c94e9c5c1b944415427, type: 3}
+--- !u!65 &2770170049052532891 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 4515594925583758042, guid: d916c404117c2c94e9c5c1b944415427,
+    type: 3}
+  m_PrefabInstance: {fileID: 1791028929910936129}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6846996376031846206 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5178692894307503487, guid: d916c404117c2c94e9c5c1b944415427,
+    type: 3}
+  m_PrefabInstance: {fileID: 1791028929910936129}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8370206797136019790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6846996376031846206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb97f58541b05b24ab37661346298ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCloseEvents: 0
+  openCloseWindow: 0
+  selectedToolbar: 0
+  attackObject: {fileID: 0}
+  trigger: {fileID: 2770170049052532891}
+  damagePercentage: 100
+  triggerType: 3
 --- !u!4 &8943870661990633892 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7260930322193662949, guid: d916c404117c2c94e9c5c1b944415427,

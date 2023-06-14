@@ -62,12 +62,12 @@ namespace Invector.vCharacterController.AI
         private void OpenDoor()
         {
             // Implement your door opening logic here
-            //door.SetActive(false);
+            door.SetActive(false);
 
-            doorAni = door.GetComponent<Animator>();
+            //doorAni = door.GetComponent<Animator>();
 
-            // Set the "OpenDoor" parameter to trigger the "DoorHack" animation
-            doorAni.SetTrigger("Open");
+            //// Set the "OpenDoor" parameter to trigger the "DoorHack" animation
+            //doorAni.SetTrigger("Open");
 
 
 

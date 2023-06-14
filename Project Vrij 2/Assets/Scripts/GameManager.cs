@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         //    Debug.Log("Game is not paused.");
         //}
 
-        if(Input.GetKey(KeyCode.Escape))
+        if(Input.GetKey(KeyCode.Tilde))
         {
             Application.Quit();
         }

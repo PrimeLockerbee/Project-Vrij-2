@@ -3608,7 +3608,6 @@ GameObject:
   - component: {fileID: 4515594925583758043}
   - component: {fileID: 4515594925583758042}
   - component: {fileID: 4515594925583758041}
-  - component: {fileID: 2724738597670970205}
   m_Layer: 0
   m_Name: spine_03
   m_TagString: Untagged
@@ -3698,25 +3697,6 @@ MonoBehaviour:
   OnGetMaxValue:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2724738597670970205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5178692894307503487}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb97f58541b05b24ab37661346298ff2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  openCloseEvents: 0
-  openCloseWindow: 0
-  selectedToolbar: 0
-  attackObject: {fileID: 0}
-  trigger: {fileID: 4515594925583758042}
-  damagePercentage: 100
-  triggerType: 3
 --- !u!1 &5262882973261757024
 GameObject:
   m_ObjectHideFlags: 0

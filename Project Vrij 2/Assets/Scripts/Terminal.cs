@@ -17,7 +17,7 @@ namespace Invector.vCharacterController.AI
 
         public GameObject popupText;
 
-        [SerializeField] Animation doorAni;
+        [SerializeField] Animator doorAni;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -63,7 +63,14 @@ namespace Invector.vCharacterController.AI
         {
             // Implement your door opening logic here
             door.SetActive(false);
-            doorAni.Play();
+
+            //doorAni = door.GetComponent<Animator>();
+
+            //// Set the "OpenDoor" parameter to trigger the "DoorHack" animation
+            //doorAni.SetTrigger("Open");
+
+
+
             doorOpened = true;
         }
     }

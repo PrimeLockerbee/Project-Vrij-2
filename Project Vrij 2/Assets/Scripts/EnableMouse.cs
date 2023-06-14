@@ -6,8 +6,8 @@ public class EnableMouse : MonoBehaviour
 {
     public void EnableMouseCursor()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void DisableMouseCursor()

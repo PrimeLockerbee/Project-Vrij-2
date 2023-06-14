@@ -39,7 +39,7 @@ namespace Invector.vCharacterController.AI
         public bool hasBeenToMechanic = false;
         public bool mechanicCutSceneHasPlayed = false;
 
-        GameObject vfxBroken;
+        public GameObject vfxBroken;
 
         void Start()
         {
